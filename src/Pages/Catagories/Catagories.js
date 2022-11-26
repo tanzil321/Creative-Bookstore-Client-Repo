@@ -1,11 +1,23 @@
 import { data } from 'autoprefixer';
-import React from 'react';
+import React, { useContext } from 'react';
 import { useLoaderData } from 'react-router-dom';
+import { AuthContext } from '../../contexts/AuthProvider';
+
 import BookingModal from '../Modal/BookingModal/BookingModal';
 
 const Catagories = () => {
     const books = useLoaderData()
-    console.log(books);
+    const {setData} = useContext(AuthContext)
+
+    const handleInfo = (name,price) => {
+      console.log(name,price);
+      var mod = {
+        name,price
+      }
+     
+      setData(mod)
+    }
+    
     return (
         <div>
            <h1 className=''>{}</h1> 
@@ -24,7 +36,7 @@ const Catagories = () => {
     
     <p className='text-2xl text-center mt-10'>Want To Purchase Now ?</p>
     <div className="card-actions justify-end">
-      <label className="btn btn-primary" htmlFor="booking-modal">Purchase</label>
+      <button onClick={()=> handleInfo(details.p_name, details.p_price_resel)}><label className="btn btn-primary" htmlFor="booking-modal">Book Now</label></button>
     </div>
   </div>
 </div>

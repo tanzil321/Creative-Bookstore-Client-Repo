@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { Link } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../contexts/AuthProvider';
 
 const Login = () => {
@@ -8,9 +8,17 @@ const Login = () => {
     const { signIn,signInWithGoogle } = useContext(AuthContext);
     const [loginError, setLoginError] = useState('');
     const [loginUserEmail, setLoginUserEmail] = useState('');
+    const navigate = useNavigate();
+    const location = useLocation();
+    const from = location.state?.from?.pathname || '/'
 
     
-
+    const handleGoogleSignin = () => {
+    signInWithGoogle().then(result => {
+      console.log(result.user)
+      navigate(from, { replace: true })
+    })
+  }
 
     const handleLogin = data => {
         console.log(data);
@@ -58,7 +66,7 @@ const Login = () => {
             </form>
             <p>New here? <Link className='text-secondary' to="/signup">Create new Account</Link></p>
             <div className="divider">OR</div>
-            <button className='btn btn-outline w-full'>CONTINUE WITH GOOGLE</button>
+            <button onClick={handleGoogleSignin} className='btn btn-outline w-full'>CONTINUE WITH GOOGLE</button>
         </div>
     </div>
     );

@@ -1,18 +1,31 @@
 import React, { useContext, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
-import { Link } from 'react-router-dom';
+import { Link,  useNavigate } from 'react-router-dom';
 
 import { AuthContext } from '../../contexts/AuthProvider';
+import useToken from '../../hooks/useToken';
 
 const SignUp = () => {
     const { register, handleSubmit, formState: { errors } } = useForm();
-    const { createUser, updateUser } = useContext(AuthContext);
+    const { createUser, updateUser, setRoles } = useContext(AuthContext);
     const [signUpError, setSignUPError] = useState('');
-    const [createdUserEmail, setCreatedUserEmail] = useState('')
+    const [createdUserEmail, setCreatedUserEmail] = useState('');
+    const [token] = useToken(createdUserEmail);
+    const navigate = useNavigate()
+    
 
+    if(token){
+        navigate('/');
+    }
 
     const handleSignUp = (data) => {
+        const role = data.role
+        const email = data.email
+        const password = data.password
+        const name = data.name 
+        const far={role,email,password,name}
+        setRoles(role)
         setSignUPError('');
         createUser(data.email, data.password)
             .then(result => {
@@ -22,11 +35,23 @@ const SignUp = () => {
                 const userInfo = {
                     displayName: data.name
                 }
-                // updateUser(userInfo)
-                //     .then(() => {
-                //         saveUser(data.name, data.email);
-                //     })
-                //     .catch(err => console.log(err));
+                updateUser(userInfo)
+                    .then(() => {
+                        fetch('http://localhost:5000/roles',{
+            method: 'POST',
+            headers:{
+                'content-type':'application/json'
+                 },
+                 body: JSON.stringify(far)
+                  })
+                  .then(res => res.json())
+                  .then(data =>{
+                      setCreatedUserEmail(email);
+                  })
+                        
+                            navigate('/')
+                    })
+                    .catch(err => console.log(err));
             })
             .catch(error => {
                 console.log(error)
@@ -65,6 +90,7 @@ const SignUp = () => {
                     <select {...register("role")} className='mr-4'>
                         <option value="user">User</option>
                         <option value="seller">Seller</option>
+                        <option value="admin">Admin</option>
                     </select>
                     <br />
                     <input className='btn btn-accent px-6 py-2' value="Sign Up" type="submit" />
