@@ -11,10 +11,12 @@ import AllSellers from "../../Pages/Dashboard/AllSellers/AllSellers";
 import AllUser from "../../Pages/Dashboard/AllUser/AllUser";
 import MyOrder from "../../Pages/Dashboard/MyOrder/MyOrder";
 import MyProduct from "../../Pages/Dashboard/MyProduct/MyProduct";
+import Payment from "../../Pages/Dashboard/Payment/Payment";
 import Home from "../../Pages/Home/Home/Home"
 import Login from "../../Pages/Login/Login";
 import ErrorPage from "../../Pages/Shared/ErrorPage/ErrorPage";
 import SignUp from "../../Pages/SignUp/SignUp";
+import PrivateRoutes from "../PrivateRoutes/PrivateRoutes";
 
 const router = createBrowserRouter([
     {
@@ -44,7 +46,7 @@ const router = createBrowserRouter([
             },
             {
                 path:'/catagories/:id',
-                element:<Catagories></Catagories>,
+                element:<PrivateRoutes><Catagories></Catagories></PrivateRoutes>,
                 loader:({params}) => fetch(`http://localhost:5000/bookOptions/${params.id}`)
             },
         ]  
@@ -78,6 +80,11 @@ const router = createBrowserRouter([
             path: '/dashboard/addproduct',
             element:<AddProduct></AddProduct>
            },
+           {
+            path: '/dashboard/payment/:id',
+            element: <Payment></Payment>,
+            loader:({params}) => fetch(`http://localhost:5000/bookOptions/${params.id}`)
+        },
         ]
     }
 ])

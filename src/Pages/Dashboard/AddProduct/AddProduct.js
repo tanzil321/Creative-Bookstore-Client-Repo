@@ -1,15 +1,18 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
+import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../../contexts/AuthProvider';
 
 
 
 const AddProduct = () => {
+    const navigate = useNavigate();
     // const { register, handleSubmit, formState: { errors } } = useForm();
     const{user,data}= useContext(AuthContext)
+    let [datas,setDatas]=useState([])
     const onSubmit = event =>{
-        
+        event.preventDefault()  
     const form = event.target;
     const name = form.name.value;
     const email = form.email.value;
@@ -19,7 +22,8 @@ const AddProduct = () => {
     const location = form.location.value;
     const year = form.year.value;
     const description = form.description.value;
-    const category_name = form.category_name.value
+    const category_name = form.category_name.value;
+    const url = form.url.value
      const addedproduct = {
     name,
     email,
@@ -29,7 +33,8 @@ const AddProduct = () => {
     location,
     year,
     description,
-    category_name
+    category_name,
+    url
    }
    fetch('http://localhost:5000/bookOptions',{
             method: 'POST',
@@ -41,14 +46,17 @@ const AddProduct = () => {
         .then(res=> res.json())
         .then(data=>{
             console.log(data);
-            if(data.acknowledged){
+            setDatas(data)
+            toast.success('Product Added')
+            navigate('/dashboard/myproduct')
+            // if(data.acknowledged){
                 
-                toast.success('Product Added')
+            //     toast.success('Product Added')
                 
-            }
-            else{
-                toast.error(data.message)
-            }
+            // }
+            // else{
+            //     toast.error(data.message)
+            // }
         })
     }
     
@@ -66,6 +74,7 @@ const AddProduct = () => {
                     <input name="price" type="text" defaultValue={data.price}   placeholder="Price"  className="input w-full input-bordered" />
                     
                     <input name="phone" type="text" defaultValue={data.phone} placeholder="Phone Number" className="input w-full input-bordered" />
+                    <input name="url" type="URL" defaultValue={data.phone} placeholder="Product Img Url" className="input w-full input-bordered" />
                     <input name="location" type="text" placeholder="Location" className="input w-full input-bordered" />
                     <div className="form-control w-full max-w-xs">
                     <label className="label"> <span className="label-text">Condition</span></label>

@@ -90,7 +90,7 @@ const SignUp = () => {
                     <select {...register("role")} className='mr-4'>
                         <option value="user">User</option>
                         <option value="seller">Seller</option>
-                        <option value="admin">Admin</option>
+                        {/* <option value="admin">Admin</option> */}
                     </select>
                     <br />
                     <input className='btn btn-accent px-6 py-2' value="Sign Up" type="submit" />

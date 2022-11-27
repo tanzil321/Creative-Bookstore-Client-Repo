@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { AuthContext } from '../../../contexts/AuthProvider';
 
 const MyOrder = () => {
-    const{user} = useContext(AuthContext)
+    const{user,data} = useContext(AuthContext)
     const url = `http://localhost:5000/submitted?email=${user?.email}`;
 
     const { data: submitted = [] } = useQuery({
@@ -38,11 +38,10 @@ const MyOrder = () => {
                             submitted &&
                             submitted?.map((booking, i) => <tr key={booking._id}>
                                 <th>{i+1}</th>
+                                <td>img</td>
                                 <td>{booking.name}</td>
-                                <td>{booking.phone}</td>
-                                <td>{booking.appointmentDate}</td>
-                                <td>{booking.slot}</td>
-                                <td>{booking.price}</td>
+                                <td>{booking.price} $</td>
+                                
                                 <td>
                                     {
                                        booking.price && !booking.paid && <Link to={`/dashboard/payment/${booking._id}`}>
