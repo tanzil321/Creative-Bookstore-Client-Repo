@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 
 const Banner = () => {
     const dataFetch = () => {
-       return axios.get('http://localhost:5000/catagories')
+       return axios.get('https://creative-bookstore-server.vercel.app/catagories')
         
     }
     const { data, isLoading } = useQuery(['category'], dataFetch,{

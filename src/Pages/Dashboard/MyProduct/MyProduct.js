@@ -13,7 +13,7 @@ const MyProduct = () => {
         setDeletingProduct(null);
     }
     const{user} = useContext(AuthContext)
-    const url = `http://localhost:5000/bookOptions?email=${user?.email}`;
+    const url = `https://creative-bookstore-server.vercel.app/orders?email=${user?.email}`;
 
     const { data: submitted = [],refetch } = useQuery({
         queryKey: ['submitted', user?.email],
@@ -28,7 +28,7 @@ const MyProduct = () => {
         }
     })
     const handleDeleteDoctor = dlt => {
-        fetch(`http://localhost:5000/bookOptions/${dlt._id}`, {
+        fetch(`https://creative-bookstore-server.vercel.app/orders/${dlt._id}`, {
             method: 'DELETE', 
             headers: {
                 authorization: `bearer ${localStorage.getItem('accessToken')}`
@@ -45,10 +45,10 @@ const MyProduct = () => {
     
     
     const handleAdvertise = (id) => {
-        fetch(`https://bike-hut-server.vercel.app/advertiseBike/${id}`, {
+        fetch(`https://creative-bookstore-server.vercel.app/advertise/${id}`, {
             method: 'PUT',
             headers: {
-                authorization: `bearer ${localStorage.getItem('bikehutAccessToken')}`
+                authorization: `bearer ${localStorage.getItem('bookAccessToken')}`
 
             }
         })
@@ -62,7 +62,7 @@ const MyProduct = () => {
 
 
     const handleSold = (id) => {
-        fetch(`http://localhost:5000/product/${id}`, {
+        fetch(`https://creative-bookstore-server.vercel.app/product/${id}`, {
             method: 'PUT',
             headers: {
                 authorization: `bearer ${localStorage.getItem('accessToken')}`
@@ -86,8 +86,8 @@ const MyProduct = () => {
                         <tr>
                             <th></th>
                             <th>Sales Status</th>
-                            <th>Product Name</th>
-                            <th>Price</th>
+                            <th>Advertise</th>
+                            <th>Name</th>
                             
                         </tr>
                     </thead>
@@ -97,6 +97,7 @@ const MyProduct = () => {
                             submitted?.map((booking, i) => <tr key={booking._id}>
                                 <th>{i+1}</th>
                                 <td><button onClick={()=>handleSold(booking._id)} className="btn btn-sm btn-success">SOLD</button></td>
+                                <td><button onClick={()=>handleAdvertise(booking._id)} className="btn btn-sm btn-success">Advirtise</button></td>
                                 <td>{booking.category_name}</td>
                                 <td>{booking.price}</td>
                                 <td>

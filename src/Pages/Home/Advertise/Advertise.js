@@ -1,29 +1,37 @@
-import { data } from "autoprefixer";
-import React, { useContext, useState } from "react";
-import { useLoaderData } from "react-router-dom";
-import { AuthContext } from "../../contexts/AuthProvider";
+import React, { useContext, useEffect, useState } from 'react';
+import { AuthContext } from '../../../contexts/AuthProvider';
+import BookingModal from '../../Modal/BookingModal/BookingModal';
 
-import BookingModal from "../Modal/BookingModal/BookingModal";
-
-const Catagories = () => {
-  const books = useLoaderData();
+const Advertise = () => {
+    const [advertiseBooks, setAdvertiseBooks] = useState([])
+    const [bookDetails, setBookDetails] = useState(null);
   const { setData } = useContext(AuthContext);
-  const [bookDetails, setBookDetails] = useState(null);
-  const handleInfo = (name, price) => {
-    console.log(name, price);
-    var mod = {
-      name,
-      price,
-    };
 
-    setData(mod);
-  };
+    const handleInfo = (name, price) => {
+        console.log(name, price);
+        var mod = {
+          name,
+          price,
+        };
+    
+        setData(mod);
+      };
+    useEffect(() => {
+        fetch('https://creative-bookstore-server.vercel.app/products')
+            .then(res => res.json())
+            .then(data => {
+                const books = data.filter(book => book.advertise === 'true');
+                setAdvertiseBooks(books)
+            })
 
-  return (
-    <div>
+    }, [])
+    return (
+        <div>
+            <div>
+            <div>
       <h1 className="">{}</h1>
       <div>
-        {books?.map((details) => (
+        {advertiseBooks?.map((details) => (
           <div className="card mt-10 card-side bg-base-100 shadow-xl">
             <figure>
               <img src={details.image} alt="Movie" />
@@ -86,14 +94,17 @@ const Catagories = () => {
           </div>
         ))}
       </div>
-      {bookDetails && (
+            </div>
+
+            {bookDetails && (
         <BookingModal
           bookDetails={bookDetails}
           setBookDetails={setBookDetails}
         ></BookingModal>
       )}
-    </div>
-  );
+            </div>
+            </div>
+    );
 };
 
-export default Catagories;
+export default Advertise;

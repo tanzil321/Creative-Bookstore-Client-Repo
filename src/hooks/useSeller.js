@@ -7,7 +7,7 @@ const useSeller = email =>{
   const [isBuyerLoading,setIsBuyerLoading] = useState(true)
     useEffect(()=>{
         if(email){
-            fetch(`http://localhost:5000/user/seller/${email}`)
+            fetch(`https://creative-bookstore-server.vercel.app/user/seller/${email}`)
         .then(res=>res.json())
         .then(data=>{
             setIsBuyer(data.isSeller)

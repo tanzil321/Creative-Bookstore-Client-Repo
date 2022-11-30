@@ -48,7 +48,7 @@ const router = createBrowserRouter([
             {
                 path:'/catagories/:id',
                 element:<PrivateRoutes><Catagories></Catagories></PrivateRoutes>,
-                loader:({params}) => fetch(`http://localhost:5000/catagory/${params.id}`)
+                loader:({params}) => fetch(`https://creative-bookstore-server.vercel.app/catagory/${params.id}`)
             },
         ]  
     },
@@ -80,7 +80,7 @@ const router = createBrowserRouter([
            {
             path: '/dashboard/payment/:id',
             element: <Payment></Payment>,
-            loader:({params}) => fetch(`http://localhost:5000/bookOptions/${params.id}`)
+            loader:({params}) => fetch(`https://creative-bookstore-server.vercel.app/bookOptions/${params.id}`)
         },
         ]
     }

@@ -52,7 +52,7 @@ const Login = () => {
 
     const saveUser = ( email,name,role,) =>{
         const user ={role,email,name};
-        fetch(`http://localhost:5000/login/${email}`, {
+        fetch(`https://creative-bookstore-server.vercel.app/login/${email}`, {
             method: 'PUT',
             headers: {
                 'content-type': 'application/json'
@@ -65,7 +65,7 @@ const Login = () => {
             localStorage.setItem('accecsToken', data.data)
             setTimeout(() => {
               navigate(from, { replace: true })
-              
+              toast.success('Login Success')
             
             }, 500);
             // localstorage
@@ -103,7 +103,7 @@ const Login = () => {
                         {loginError && <p className='text-red-600'>{loginError}</p>}
                     </div>
                 </form>
-                <p>New to Doctors Portal <Link className='text-secondary' to="/signup">Create new Account</Link></p>
+                <p>New to creativeBookstore? <Link className='text-secondary' to="/signup">Create new Account</Link></p>
                 <div className="divider">OR</div>
                 <button onClick={handleGoogleSignIn} className='btn btn-outline w-full'>CONTINUE WITH GOOGLE</button>
             </div>
