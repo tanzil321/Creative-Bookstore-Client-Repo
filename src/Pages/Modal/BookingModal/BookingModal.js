@@ -21,7 +21,7 @@ const BookingModal = () => {
         price
         
        }
-        fetch('http://localhost:5000/submitted',{
+        fetch('https://creative-bookstore-server.vercel.app/submitted',{
             method: 'POST',
             headers:{
                 'content-type':'application/json'

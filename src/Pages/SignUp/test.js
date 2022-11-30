@@ -44,7 +44,7 @@ const SignUp = () => {
                         updateUser(name)
                             .then(() => {
                                 console.log('Display Name Updated')
-                                fetch('http://localhost:5000/roles', {
+                                fetch('https://creative-bookstore-server.vercel.app/roles', {
                                     method: 'POST',
                                     headers: {
                                         "Content-Type": 'application/json',
