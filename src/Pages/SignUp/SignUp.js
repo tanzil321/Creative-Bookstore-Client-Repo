@@ -21,13 +21,9 @@ const SignUp = () => {
 
     const handleSignUp = (data) => {
         const role = data.role
-        const email = data.email
-        const password = data.password
-        const name = data.name 
-        const far={role,email,password,name}
         setRoles(role)
         setSignUPError('');
-        createUser(data.email, data.password)
+        createUser(data.email, data.password,data.role)
             .then(result => {
                 const user = result.user;
                 console.log(user);
@@ -37,20 +33,8 @@ const SignUp = () => {
                 }
                 updateUser(userInfo)
                     .then(() => {
-                        fetch('http://localhost:5000/roles',{
-            method: 'POST',
-            headers:{
-                'content-type':'application/json'
-                 },
-                 body: JSON.stringify(far)
-                  })
-                  .then(res => res.json())
-                  .then(data =>{
-                      setCreatedUserEmail(email);
-                  })
-                        
-                            navigate('/')
-                    })
+                    saveUser(data.name, data.email,data.role,data.password);
+            })
                     .catch(err => console.log(err));
             })
             .catch(error => {
@@ -58,6 +42,21 @@ const SignUp = () => {
                 setSignUPError(error.message)
             });
     }
+
+    const saveUser = (name, email,role,password) =>{
+        const far ={role,email,password,name};
+        fetch('http://localhost:5000/roles', {
+            method: 'POST',
+            headers: {
+                'content-type': 'application/json'
+            },
+            body: JSON.stringify(far)
+        })
+        .then(res => res.json())
+        .then(data =>{
+            setCreatedUserEmail(email);
+        })
+    } 
     return (
         <div className='h-[800px] flex justify-center items-center'>
         <div className='w-96 p-7'>
@@ -90,7 +89,7 @@ const SignUp = () => {
                     <select {...register("role")} className='mr-4'>
                         <option value="user">User</option>
                         <option value="seller">Seller</option>
-                        {/* <option value="admin">Admin</option> */}
+                        <option value="admin">Admin</option>
                     </select>
                     <br />
                     <input className='btn btn-accent px-6 py-2' value="Sign Up" type="submit" />
@@ -107,3 +106,92 @@ const SignUp = () => {
 };
 
 export default SignUp;
+
+
+
+
+// const Login = () => {
+//     const { setErr, err, signIn, setRoles } = useContext(AuthServices)
+//     const location = useLocation()
+//     const navigate = useNavigate()
+//     let from = location.state?.from?.pathname || '/'
+//     const {
+//         register,
+//         handleSubmit,
+//         formState: { errors }
+//     } = useForm();
+
+//     const onSubmit = (data, e) => {
+//         e.preventDefault()
+
+//         const email = data.mail
+//         const password = data.password
+//         const role = data.role
+//         setRoles(role)
+//         const UserInfo = {
+
+//             email, password
+//         }
+
+//         signIn(email, password)
+//             .then(result => {
+//                 const user = result.user
+//                 console.log(user);
+//                 e.target.reset()
+//                 navigate(from, { replace: true })
+//             })
+//             .catch(error => {
+//                 setErr(error.message)
+//             })
+//         // console.log(name, number, email, password, address, role)
+//     }
+//     return (
+//         <div>
+//             <div>
+
+//                 <h1 className="text-purple-700 font-bold text-center text-2xl mt-10 mb-6">Please Login</h1>
+//                 <form onSubmit={handleSubmit(onSubmit)} className='w-96 mx-auto text-center'>
+
+//                     <label htmlFor="">Email</label>
+//                     <br />
+//                     <input type='email'
+//                         {...register("mail", { required: "Email Address is required" })}
+//                         aria-invalid={errors.mail ? "true" : "false"}
+//                     />
+//                     {errors.mail && <p role="alert" className='text-red-900'>{errors.mail?.message}</p>}
+//                     <br />
+//                     <label htmlFor="">Password</label>
+//                     <br />
+//                     <input type="password" {...register('password', {
+//                         required: true,
+//                         pattern: /^(?=.*\d)(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z]).{8,}$/,
+//                     })} />
+//                     {
+//                         errors?.password?.type === 'required' && <p className='text-red-900'>Password is required </p>
+//                     }
+
+//                     <br />
+
+//                     <small>Do not have account? <Link to='/register'>Register</Link></small>
+//                     <div className='flex justify-center mt-4 mb-6'>
+//                         <select {...register("role")} className='mr-4'>
+//                             <option value="user" >User</option>
+//                             <option value="seller">Seller</option>
+//                             <option value="admin">Admin</option>
+//                         </select>
+//                         <br />
+//                         {
+//                             err ? <h1 className='text-red-900'>{err}</h1> : ''
+//                         }
+//                         <button className="bg-purple-700 px-6 py-2 "
+
+//                         >Submit</button>
+
+//                     </div>
+//                 </form>
+//             </div>
+//         </div>
+//     );
+// };
+
+// export default Login;

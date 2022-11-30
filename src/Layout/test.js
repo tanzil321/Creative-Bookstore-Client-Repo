@@ -6,7 +6,7 @@ import Navbar from '../Pages/Shared/Navbar/Navbar';
 
 const DashboardLayout = () => {
     const { user,roles,loading } = useContext(AuthContext);
-    const [isAdmin] = useAdmin(user?.email) 
+    
     
     
     
@@ -20,14 +20,12 @@ const DashboardLayout = () => {
                 </div>
                 <div className="drawer-side">
                     <label htmlFor="dashboard-drawer" className="drawer-overlay"></label>
-                    <ul className="menu p-4 w-80 text-base-content">
-
-                    {
-                            isAdmin && 
-                            <div>
-                                <li><Link to='/dashboard/allseller'>All Sellers</Link></li>
-                                <li><Link to='/dashboard/allbuyer'>All Buyers</Link></li>
-                            </div>  
+                    <ul className="menu p-4 w-80  text-base-content">
+                        {
+                            roles === 'admin' && user?.email === 'tanzilwhatever@gmail.com' ? <div>
+                                <li><Link to='/dashboard/alluser'>All users</Link></li>
+                                <li><Link to='/dashboard/allbuyer'>All Seller</Link></li>
+                            </div> : ''
                         }
 
                         {
@@ -40,9 +38,8 @@ const DashboardLayout = () => {
                             </div>
                         }
 
-
-                                
-                                {/* <li><Link to="/dashboard">My Orders</Link></li>
+                    </ul>
+                    {/* <li><Link to="/dashboard">My Orders</Link></li>
                         
                             
                                 <li><Link to="/dashboard/alluser">All users</Link></li>
@@ -50,10 +47,6 @@ const DashboardLayout = () => {
                                 <li><Link to="/dashboard/addproduct">Add A product</Link></li>
                                 <li><Link to="/dashboard/allseller">All Sellers</Link></li>
                                 <li><Link to="/dashboard/allbuyer">All Buyers</Link></li> */}
-                           
-                        
-
-                    </ul>
 
                 </div>
             </div>
