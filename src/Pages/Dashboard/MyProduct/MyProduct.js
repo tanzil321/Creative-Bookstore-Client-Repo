@@ -48,7 +48,7 @@ const MyProduct = () => {
         fetch(`https://bike-hut-server.vercel.app/bike/${id}`, {
             method: 'PUT',
             headers: {
-                authorization: `bearer ${localStorage.getItem('bikehutAccessToken')}`
+                authorization: `bearer ${localStorage.getItem('accessToken')}`
 
             }
         })
