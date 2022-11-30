@@ -29,7 +29,7 @@ const [bookDetails,setBookDetails] = useState(null)
             <figure>
               <img src={details.image} alt="Movie" />
             </figure>
-            
+            <div className="card-body">
               <h2 className="card-title">{details.productName}</h2>
               <div className="badge badge-secondary ">{details.sellerLocation}</div>
               <div className="badge badge-secondary">
