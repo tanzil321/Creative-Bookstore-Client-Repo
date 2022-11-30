@@ -7,96 +7,101 @@ import useToken from '../../hooks/useToken';
 
 const Login = () => {
     const { register, formState: { errors }, handleSubmit } = useForm();
-    const { signIn,signInWithGoogle,setRoles } = useContext(AuthContext);
+    const { signIn,signInWithGoogle, } = useContext(AuthContext);
     const [loginError, setLoginError] = useState('');
     const [loginUserEmail, setLoginUserEmail] = useState('');
     const [token] = useToken(loginUserEmail);
     const location = useLocation();
     const navigate = useNavigate();
     
-    const from = location.state?.from?.pathname || '/'
+    const from = location.state?.from?.pathname || '/';
 
-    if (token) {
-        navigate(from, { replace: true });
-    }
-    const handleGoogleSignin = () => {
-    signInWithGoogle().then(result => {
-      console.log(result.user)
-      navigate(from, { replace: true })
-    })
-  }
+    // if (token) {
+    //     navigate(from, { replace: true });
+    // }
 
-  const onSubmit = (data, e) => {
-    e.preventDefault()
 
-    const email = data.mail
-    const password = data.password
-    const role = data.role
-    setRoles(role)
-    const UserInfo = {
-
-        email, password
-    }
-
-    signIn(email, password)
-        .then(result => {
+    const handleGoogleSignIn = () =>{
+        signInWithGoogle()
+        .then(result=>{
             const user = result.user
-            console.log(user);
-            toast('Login Successfully.')
-            e.target.reset()
-            navigate(from, { replace: true })
+            const role = 'user';
+            saveUser(user.email,user.displayName,role)
         })
-        .catch(error => {
-            console.log(error.message)
+        .catch(err=>console.log(err))
+    }
+
+    const handleLogin = data => {
+        console.log(data);
+        setLoginError('');
+        signIn(data.email, data.password)
+            .then(result => {
+                const user = result.user;
+                console.log(user);
+                saveUser(user.email,user.displayName)
+                // setLoginUserEmail(data.email);
+            })
+            .catch(error => {
+                console.log(error.message)
+                setLoginError(error.message);
+            });
+    }
+
+
+    
+
+    const saveUser = ( email,name,role,) =>{
+        const user ={role,email,name};
+        fetch(`http://localhost:5000/login/${email}`, {
+            method: 'PUT',
+            headers: {
+                'content-type': 'application/json'
+            },
+            body: JSON.stringify(user)
         })
-    // console.log(name, number, email, password, address, role)
-}
+        .then(res => res.json())
+        .then(data =>{
+            console.log(data)
+            // localstorage
+            // setCreatedUserEmail(email);
+        })
+    } 
+
     return (
-        <div className=' flex justify-center items-center'>
-                <div className='w-96 p-7'>
-                <h1 className="text-xl ml-10 text-center mb-10">Please Login</h1>
-                <form onSubmit={handleSubmit(onSubmit)} className='w-96 mx-auto text-center'>
-
-                    <label htmlFor="">Email</label>
-                    <br />
-                    <input type='email'
-                        {...register("mail", { required: "Email Address is required" })}
-                        aria-invalid={errors.mail ? "true" : "false"}
-                    />
-                    {errors.mail && <p role="alert" className='text-red-900'>{errors.mail?.message}</p>}
-                    <br />
-                    <label htmlFor="">Password</label>
-                    <br />
-                    <input type="password" {...register('password', {
-                        required: true,
-                        
-                    })} />
-                    {
-                        errors.password && <p className='text-red-600'>{errors.password?.message}</p>
-                    }
-
-                    <br />
-
-                    <small>Do not have account? <Link to='/signup'>Register</Link></small>
-                    <div className='flex justify-center mt-4 mb-6'>
-                        <select {...register("role")} className='mr-4'>
-                            <option value="user" >User</option>
-                            <option value="seller">Seller</option>
-                            <option value="admin">Admin</option>
-                        </select>
-                        <br />
-                        
-                        <button className="bg-purple-700 px-6 py-2 "
-
-                        >Submit</button>
-
+        <div className='h-[800px] flex justify-center items-center'>
+            <div className='w-96 p-7'>
+                <h2 className='text-xl text-center'>Login</h2>
+                <form onSubmit={handleSubmit(handleLogin)}>
+                    <div className="form-control w-full max-w-xs">
+                        <label className="label"> <span className="label-text">Email</span></label>
+                        <input type="text"
+                            {...register("email", {
+                                required: "Email Address is required"
+                            })}
+                            className="input input-bordered w-full max-w-xs" />
+                        {errors.email && <p className='text-red-600'>{errors.email?.message}</p>}
+                    </div>
+                    <div className="form-control w-full max-w-xs">
+                        <label className="label"> <span className="label-text">Password</span></label>
+                        <input type="password"
+                            {...register("password", {
+                                required: "Password is required",
+                                minLength: { value: 6, message: 'Password must be 6 characters or longer' }
+                            })}
+                            className="input input-bordered w-full max-w-xs" />
+                        <label className="label"> <span className="label-text">Forget Password?</span></label>
+                        {errors.password && <p className='text-red-600'>{errors.password?.message}</p>}
+                    </div>
+                    <input className='btn btn-accent w-full' value="Login" type="submit" />
+                    <div>
+                        {loginError && <p className='text-red-600'>{loginError}</p>}
                     </div>
                 </form>
-                <div className="divider ml-10">OR</div>
-                <button className='btn ml-10 btn-outline w-full'>CONTINUE WITH GOOGLE</button>
-                </div>
-                
+                <p>New to Doctors Portal <Link className='text-secondary' to="/signup">Create new Account</Link></p>
+                <div className="divider">OR</div>
+                <button onClick={handleGoogleSignIn} className='btn btn-outline w-full'>CONTINUE WITH GOOGLE</button>
             </div>
+        </div>
     );
 };
 

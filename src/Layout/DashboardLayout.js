@@ -5,8 +5,8 @@ import useAdmin from '../hooks/useAdmin';
 import Navbar from '../Pages/Shared/Navbar/Navbar';
 
 const DashboardLayout = () => {
-    const { user,roles,loading } = useContext(AuthContext);
-    const [isAdmin] = useAdmin(user?.email) 
+    const { user,loading } = useContext(AuthContext);
+    // const [isAdmin] = useAdmin(user?.email) 
     
     
     
@@ -22,23 +22,20 @@ const DashboardLayout = () => {
                     <label htmlFor="dashboard-drawer" className="drawer-overlay"></label>
                     <ul className="menu p-4 w-80 text-base-content">
 
-                    {
-                            isAdmin && 
-                            <div>
+                    
                                 <li><Link to='/dashboard/allseller'>All Sellers</Link></li>
                                 <li><Link to='/dashboard/allbuyer'>All Buyers</Link></li>
-                            </div>  
-                        }
+                         
+                        
 
-                        {
-                            roles === 'user' && <li><Link to='/dashboard'>My Orders</Link></li>
-                        }
-                        {
-                            roles === 'seller' && <div>
+                        
+                         <li><Link to='/dashboard'>My Orders</Link></li>
+                        
+                        
                                 <li><Link to='/dashboard/addproduct'>Add a Products</Link></li>
                                 <li><Link to='/dashboard/myproduct'>My Products</Link></li>
-                            </div>
-                        }
+                            
+                        
 
 
                                 

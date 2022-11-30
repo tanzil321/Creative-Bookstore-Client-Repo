@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 
 const Banner = () => {
     const dataFetch = () => {
-       return axios.get('http://localhost:5000/bookOptions')
+       return axios.get('http://localhost:5000/catagories')
         
     }
     const { data, isLoading } = useQuery(['category'], dataFetch,{
@@ -17,6 +17,9 @@ const Banner = () => {
     if (isLoading) {
         return <progress className="progress w-56 text-center"></progress>
     }
+
+    console.log(data.data)
+
     return (
 
         <>
@@ -28,10 +31,10 @@ const Banner = () => {
             data?.data.map(cat => <>
           <div className=' card w-80 bg-gray-900 mb-6'>
             <div className='card-body'>
-                    <h2 className='text-center'>{cat.category_name}</h2>
+                    <h2 className='text-center'>{cat.catagory_name}</h2>
                     <hr />
                     <div className="card-actions justify-center mt-5">
-                    <button className="btn btn-cyan"><Link to={`/catagories/${cat._id}`}>
+                    <button className="btn btn-cyan"><Link to={`/catagories/${cat.catagory_id}`}>
                             
                             Browse now
                     </Link></button>

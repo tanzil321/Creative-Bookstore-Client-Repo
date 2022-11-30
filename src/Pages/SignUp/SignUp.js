@@ -8,20 +8,20 @@ import useToken from '../../hooks/useToken';
 
 const SignUp = () => {
     const { register, handleSubmit, formState: { errors } } = useForm();
-    const { createUser, updateUser, setRoles } = useContext(AuthContext);
+    const { createUser, updateUser,  } = useContext(AuthContext);
     const [signUpError, setSignUPError] = useState('');
-    const [createdUserEmail, setCreatedUserEmail] = useState('');
-    const [token] = useToken(createdUserEmail);
+    // const [createdUserEmail, setCreatedUserEmail] = useState('');
+    // const [token] = useToken(createdUserEmail);
     const navigate = useNavigate()
     
 
-    if(token){
-        navigate('/');
-    }
+    // if(token){
+    //     navigate('/');
+    // }
 
     const handleSignUp = (data) => {
-        const role = data.role
-        setRoles(role)
+     
+     
         setSignUPError('');
         createUser(data.email, data.password,data.role)
             .then(result => {
@@ -33,7 +33,7 @@ const SignUp = () => {
                 }
                 updateUser(userInfo)
                     .then(() => {
-                    saveUser(data.name, data.email,data.role,data.password);
+                    saveUser(data.name, data.email,data.role,);
             })
                     .catch(err => console.log(err));
             })
@@ -43,18 +43,19 @@ const SignUp = () => {
             });
     }
 
-    const saveUser = (name, email,role,password) =>{
-        const far ={role,email,password,name};
-        fetch('http://localhost:5000/roles', {
-            method: 'POST',
+    const saveUser = (name, email,role,) =>{
+        const user ={role,email,name};
+        fetch(`http://localhost:5000/login/${email}`, {
+            method: 'PUT',
             headers: {
                 'content-type': 'application/json'
             },
-            body: JSON.stringify(far)
+            body: JSON.stringify(user)
         })
         .then(res => res.json())
         .then(data =>{
-            setCreatedUserEmail(email);
+            console.log(data)
+            // setCreatedUserEmail(email);
         })
     } 
     return (
@@ -89,7 +90,7 @@ const SignUp = () => {
                     <select {...register("role")} className='mr-4'>
                         <option value="user">User</option>
                         <option value="seller">Seller</option>
-                        <option value="admin">Admin</option>
+                       
                     </select>
                     <br />
                     <input className='btn btn-accent px-6 py-2' value="Sign Up" type="submit" />

@@ -11,12 +11,12 @@ const AuthProvider = ({children}) => {
     const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(true);
     const [data,setData] = useState({})
-    const [roles, setRoles] = useState(() => {
-        return JSON.parse(localStorage.getItem("LOCAL_STORAGE_KEY")) || []
-    });
-    useEffect(() => {
-        localStorage.setItem("LOCAL_STORAGE_KEY", JSON.stringify(roles));
-    }, [roles]);
+    // const [roles, setRoles] = useState(() => {
+    //     return JSON.parse(localStorage.getItem("LOCAL_STORAGE_KEY")) || []
+    // });
+    // useEffect(() => {
+    //     localStorage.setItem("LOCAL_STORAGE_KEY", JSON.stringify(roles));
+    // }, [roles]);
     const createUser = (email, password) =>{
         setLoading(true);
         return createUserWithEmailAndPassword(auth, email, password);
@@ -60,8 +60,7 @@ const AuthProvider = ({children}) => {
         signInWithGoogle,
         data,
         setData,
-        roles,
-        setRoles
+       
         
     }
     return (
