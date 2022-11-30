@@ -43,6 +43,23 @@ const MyProduct = () => {
         })
     }
     
+    
+    const handleAdvertise = (id) => {
+        fetch(`https://bike-hut-server.vercel.app/advertiseBike/${id}`, {
+            method: 'PUT',
+            headers: {
+                authorization: `bearer ${localStorage.getItem('bikehutAccessToken')}`
+
+            }
+        })
+            .then(res => res.json())
+            .then(data => {
+                console.log(data);
+                refetch()
+                toast.success('Product is Live on Ad Section')
+        })
+    }
+
 
     const handleSold = (id) => {
         fetch(`http://localhost:5000/product/${id}`, {
