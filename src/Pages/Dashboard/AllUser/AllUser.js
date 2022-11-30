@@ -17,7 +17,7 @@ const AllUser = () => {
 <table className="table w-full">
 <thead>
   <tr>
-    <th></th>
+    
     <th>Name</th>
     <th>Email</th>
     <th>Admin</th>

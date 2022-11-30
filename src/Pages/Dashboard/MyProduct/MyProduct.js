@@ -45,7 +45,7 @@ const MyProduct = () => {
     
 
     const handleSold = (id) => {
-        fetch(`https://bike-hut-server.vercel.app/bike/${id}`, {
+        fetch(`http://localhost:5000/product/${id}`, {
             method: 'PUT',
             headers: {
                 authorization: `bearer ${localStorage.getItem('accessToken')}`
@@ -79,7 +79,7 @@ const MyProduct = () => {
                             submitted &&
                             submitted?.map((booking, i) => <tr key={booking._id}>
                                 <th>{i+1}</th>
-                                <td><button className="btn btn-sm btn-success">Available</button></td>
+                                <td><button onClick={()=>handleSold(booking._id)} className="btn btn-sm btn-success">SOLD</button></td>
                                 <td>{booking.category_name}</td>
                                 <td>{booking.price}</td>
                                 <td>
