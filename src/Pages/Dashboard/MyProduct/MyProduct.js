@@ -13,7 +13,7 @@ const MyProduct = () => {
         setDeletingProduct(null);
     }
     const{user} = useContext(AuthContext)
-    const url = `https://creative-bookstore-server.vercel.app/bookOptions?email=${user?.email}`;
+    const url = `http://localhost:5000/bookOptions?email=${user?.email}`;
 
     const { data: submitted = [],refetch } = useQuery({
         queryKey: ['submitted', user?.email],
@@ -28,7 +28,7 @@ const MyProduct = () => {
         }
     })
     const handleDeleteDoctor = dlt => {
-        fetch(`https://creative-bookstore-server.vercel.app/bookOptions/${dlt._id}`, {
+        fetch(`http://localhost:5000/bookOptions/${dlt._id}`, {
             method: 'DELETE', 
             headers: {
                 authorization: `bearer ${localStorage.getItem('accessToken')}`

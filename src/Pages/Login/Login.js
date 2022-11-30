@@ -52,7 +52,7 @@ const Login = () => {
 
     const saveUser = ( email,name,role,) =>{
         const user ={role,email,name};
-        fetch(`https://creative-bookstore-server.vercel.app/login/${email}`, {
+        fetch(`http://localhost:5000/login/${email}`, {
             method: 'PUT',
             headers: {
                 'content-type': 'application/json'

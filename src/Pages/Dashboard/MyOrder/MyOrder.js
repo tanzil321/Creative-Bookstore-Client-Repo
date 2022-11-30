@@ -5,7 +5,7 @@ import { AuthContext } from '../../../contexts/AuthProvider';
 
 const MyOrder = () => {
     const{user,data} = useContext(AuthContext)
-    const url = `https://creative-bookstore-server.vercel.app/submitted?email=${user?.email}`;
+    const url = `http://localhost:5000/submitted?email=${user?.email}`;
 
     const { data: submitted = [] } = useQuery({
         queryKey: ['submitted', user?.email],
