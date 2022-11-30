@@ -62,6 +62,12 @@ const Login = () => {
         .then(res => res.json())
         .then(data =>{
             console.log(data)
+            localStorage.setItem('accecsToken', data.data)
+            setTimeout(() => {
+              navigate(from, { replace: true })
+              
+            
+            }, 500);
             // localstorage
             // setCreatedUserEmail(email);
         })

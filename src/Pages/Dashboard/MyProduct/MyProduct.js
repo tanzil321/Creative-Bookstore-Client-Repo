@@ -43,6 +43,23 @@ const MyProduct = () => {
         })
     }
     
+
+    const handleSold = (id) => {
+        fetch(`https://bike-hut-server.vercel.app/bike/${id}`, {
+            method: 'PUT',
+            headers: {
+                authorization: `bearer ${localStorage.getItem('bikehutAccessToken')}`
+
+            }
+        })
+            .then(res => res.json())
+            .then(data => {
+                console.log(data);
+                refetch()
+                toast.success('Product Sold')
+        })
+    }
+
     return (
         <div>
             <h3 className="text-3xl  mb-5">My Product</h3>

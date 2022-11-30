@@ -38,7 +38,7 @@ const MyOrder = () => {
                             submitted &&
                             submitted?.map((booking, i) => <tr key={booking._id}>
                                 <th>{i+1}</th>
-                                <td>img</td>
+                                <td><img className='w-14 ' src={ booking.image} alt="" /></td>
                                 <td>{booking.name}</td>
                                 <td>{booking.price} $</td>
                                 

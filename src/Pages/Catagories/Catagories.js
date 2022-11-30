@@ -1,5 +1,5 @@
 import { data } from "autoprefixer";
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { useLoaderData } from "react-router-dom";
 import { AuthContext } from "../../contexts/AuthProvider";
 
@@ -8,7 +8,7 @@ import BookingModal from "../Modal/BookingModal/BookingModal";
 const Catagories = () => {
   const books = useLoaderData();
   const { setData } = useContext(AuthContext);
-// const [book]
+const [bookDetails,setBookDetails] = useState(null)
   const handleInfo = (name, price) => {
     console.log(name, price);
     var mod = {
@@ -19,23 +19,7 @@ const Catagories = () => {
     setData(mod);
   };
 
-  //     productName
-  // image
-  // catagoryId
-  // condition
-  // orginalPrice
-  // resalePrice
-  // sellerNumber
-  // sellerLocation
-  // sellerEmail
-  // Bookdetails
-  // postdate
-  // status
-  // sellerName
-  // purchaseDate
-  // paid
-  // reported
-
+  
   return (
     <div>
       <h1 className="">{}</h1>
@@ -73,7 +57,7 @@ const Catagories = () => {
                     handleInfo(details.productName, details.resalePrice)
                   }
                 >
-                  <label className="btn btn-primary" htmlFor="booking-modal">
+                  <label onClick={()=>setBookDetails(details)} className="btn btn-primary" htmlFor="booking-modal">
                     Book Now
                   </label>
                 </button>
@@ -82,7 +66,13 @@ const Catagories = () => {
           </div>
         ))}
       </div>
-      <BookingModal></BookingModal>
+      {
+        bookDetails &&
+        <BookingModal
+            bookDetails={bookDetails}
+            setBookDetails={setBookDetails}
+          ></BookingModal>
+    }
     </div>
   );
 };
