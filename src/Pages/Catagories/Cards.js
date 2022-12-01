@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 const Cards = ({ details, handleInfo, setBookDetails }) => {
   const [user, setUser] = useState([]);
   useEffect(() => {
-    fetch("http://localhost:5000/users")
+    fetch("https://creative-bookstore-server.vercel.app/users")
       .then((res) => res.json())
       .then((data) => {
         const users = data.filter((user) => user.email === details.sellerEmail);

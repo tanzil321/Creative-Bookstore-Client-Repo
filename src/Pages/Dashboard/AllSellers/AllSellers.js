@@ -31,7 +31,7 @@ const AllSellers = () => {
     console.log(submitted)
 
     const verifySeller = email=>{
-        fetch(`http://localhost:5000/verifyseller?email=${email}`, {
+        fetch(`https://creative-bookstore-server.vercel.app/verifyseller?email=${email}`, {
             method:'PUT'
         })
         .then(res=>res.json())
