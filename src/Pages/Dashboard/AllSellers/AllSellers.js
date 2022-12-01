@@ -30,8 +30,8 @@ const AllSellers = () => {
 
     console.log(submitted)
 
-    const handleDeleteDoctor = dlt => {
-        fetch(`https://creative-bookstore-server.vercel.app/users/${dlt._id}`, {
+    const handleDeleteDoctor = id => {
+        fetch(`https://creative-bookstore-server.vercel.app/users/${id}`, {
             method: 'DELETE', 
             headers: {
                 authorization: `bearer ${localStorage.getItem('accessToken')}`
@@ -66,24 +66,14 @@ const AllSellers = () => {
                                 <td>{booking.role}</td>
                                 <td>{booking.name}</td>
                                 <td>
-                                    <label onClick={() => setDeletingProduct(booking)} htmlFor="confirmation-modal" className="btn btn-sm btn-error">Delete</label>
+                                    <label onClick={() => handleDeleteDoctor(booking._id)} htmlFor="confirmation-modal" className="btn btn-sm btn-error">Delete</label>
                                 </td>
                             </tr>)
                         }
                     </tbody>
                 </table>
             </div>
-            {
-                deletingProduct && <ConfirmationModal
-                    title={`Are you sure you want to delete?`}
-                    message={`If you delete ${deletingProduct.category_name}. It cannot be undone.`}
-                    successAction = {handleDeleteDoctor}
-                    successButtonName="Delete"
-                    modalData = {deletingProduct}
-                    closeModal = {closeModal}
-                >
-                </ConfirmationModal>
-            }
+            
         </div>
     );
 };
