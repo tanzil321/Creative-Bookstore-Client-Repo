@@ -147,7 +147,7 @@ const AddAproduct = () => {
                                             <span className="label-text font-semibold">Catagory</span>
                                         </label>
                                         <select {...register('brand', { required: true })} className="select select-bordered w-full ">
-                                            <option value='Buyer'>Select Brand</option>
+                                            <option value='Buyer'>Select Author</option>
                                             {
                                                 catagory.map((cata, i) => <option
                                                     key={i}

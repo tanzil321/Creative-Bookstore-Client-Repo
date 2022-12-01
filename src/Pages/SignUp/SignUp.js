@@ -61,7 +61,7 @@ const SignUp = () => {
               navigate(from, { replace: true })
               
             
-            }, 500);
+            }, 200);
             // setCreatedUserEmail(email);
         })
     } 

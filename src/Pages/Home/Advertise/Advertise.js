@@ -60,7 +60,7 @@ const Advertise = () => {
                 )}
               </div>
               <div className="badge badge-secondary">
-                Posted On : {details.postdate} days ago
+                Posted On : {details.postdate} 
               </div>
               <div className="badge badge-primary mt-10">
                 Original Price : {details.orginalPrice}$

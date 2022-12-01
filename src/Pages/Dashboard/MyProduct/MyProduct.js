@@ -98,8 +98,8 @@ const MyProduct = () => {
                                 <th>{i+1}</th>
                                 <td><button onClick={()=>handleSold(booking._id)} className="btn btn-sm btn-success">SOLD</button></td>
                                 <td><button onClick={()=>handleAdvertise(booking._id)} className="btn btn-sm btn-success">Advirtise</button></td>
-                                <td>{booking.category_name}</td>
-                                <td>{booking.price}</td>
+                                {/* <td>{booking.category_name}</td>
+                                <td>{booking.price}</td> */}
                                 <td>
                                     <label onClick={() => setDeletingProduct(booking)} htmlFor="confirmation-modal" className="btn btn-sm btn-error">Delete</label>
                                 </td>

@@ -3,6 +3,8 @@
 ## Website name ==> Creative BookStore ##
 
 Live Site Link : https://creative-bookstore.web.app/
+adminemail: admin12@gmail.com
+adminpass: 123@Admin
 
 # Features and functionalities
 
