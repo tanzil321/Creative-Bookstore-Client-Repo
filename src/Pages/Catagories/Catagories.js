@@ -20,7 +20,7 @@ const Catagories = () => {
     setData(mod);
   };
 
-  
+  const {user} = useContext(AuthContext)
 
 
   return (
@@ -30,6 +30,7 @@ const Catagories = () => {
         {books?.map((details) => <Cards
         key={details._id}
         details={details}
+        loginUser={user}
         setBookDetails={setBookDetails}
         handleInfo={handleInfo}
         >

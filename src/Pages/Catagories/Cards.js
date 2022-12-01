@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 
-const Cards = ({ details, handleInfo, setBookDetails }) => {
+const Cards = ({ details, handleInfo, setBookDetails ,loginUser}) => {
+    
   const [user, setUser] = useState([]);
   useEffect(() => {
     fetch("https://creative-bookstore-server.vercel.app/users")
@@ -74,7 +76,10 @@ const Cards = ({ details, handleInfo, setBookDetails }) => {
 
           <p className="text-2xl text-center mt-10">Want To Purchase Now ?</p>
           <div className="card-actions justify-end">
-            <button
+                      {
+                          loginUser?.uid ?
+                          <>
+                           <button
               onClick={() =>
                 handleInfo(details.productName, details.resalePrice)
               }
@@ -87,6 +92,13 @@ const Cards = ({ details, handleInfo, setBookDetails }) => {
                 Book Now
               </label>
             </button>
+                          </>
+                          :
+                          <>
+                          <p>Please <Link to='/login'>Login</Link> To Book This</p>
+                          </>
+
+           }
           </div>
         </div>
       </div>
