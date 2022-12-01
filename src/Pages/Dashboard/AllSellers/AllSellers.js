@@ -30,6 +30,17 @@ const AllSellers = () => {
 
     console.log(submitted)
 
+    const verifySeller = email=>{
+        fetch(`http://localhost:5000/verifyseller?email=${email}`, {
+            method:'PUT'
+        })
+        .then(res=>res.json())
+        .then(data=>{
+            console.log(data)
+            toast.success('SellerVerified')
+        })
+    }
+
     const handleDeleteDoctor = id => {
         fetch(`https://creative-bookstore-server.vercel.app/users/${id}`, {
             method: 'DELETE', 
@@ -55,6 +66,8 @@ const AllSellers = () => {
                             <th></th>
                             <th>Roles</th>
                             <th>Name</th>
+                            <th>Verify</th>
+                           
                             <th>Delete</th>
                         </tr>
                     </thead>
@@ -65,6 +78,7 @@ const AllSellers = () => {
                                 <th>{i+1}</th>
                                 <td>{booking.role}</td>
                                 <td>{booking.name}</td>
+                                <td><button className="btn btn-sm btn-success" onClick={()=>verifySeller(booking.email)}>VerifySeller</button></td>
                                 <td>
                                     <label onClick={() => handleDeleteDoctor(booking._id)} htmlFor="confirmation-modal" className="btn btn-sm btn-error">Delete</label>
                                 </td>
