@@ -20,7 +20,7 @@ const Advertise = () => {
         fetch('https://creative-bookstore-server.vercel.app/products')
             .then(res => res.json())
             .then(data => {
-                const books = data.filter(book => book.advertise === 'true');
+                const books = data.filter(book => book.advertise === 'true' && book.paid !== 'true');
                 setAdvertiseBooks(books)
             })
 
