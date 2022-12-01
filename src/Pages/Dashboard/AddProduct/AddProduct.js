@@ -26,7 +26,7 @@ const AddAproduct = () => {
     // console.log(date);
 
     const handleAddaProduct = (data) => {
-        // setUploadingAnimation(true)
+        setUploadingAnimation(true)
         // console.log(data.brand);
         console.log(data)
         console.log('clicked')
@@ -63,7 +63,7 @@ const AddAproduct = () => {
                         reported: 'false'
                     }
 
-                    // console.log(bikedetails)
+                    
 
                     fetch('https://creative-bookstore-server.vercel.app/products', {
                         method: 'POST',
@@ -77,7 +77,7 @@ const AddAproduct = () => {
                             if (data.acknowledged) {
                                 console.log(data);
                                 // toast.success('Product Added SuccessFully')
-                                // navigate('/dashboard/myproducts')
+                                navigate('/dashboard/myproduct')
                                 setUploadingAnimation(false)
                             }
 
@@ -110,7 +110,7 @@ const AddAproduct = () => {
             {
                 uploadingAnimation ? <div className='flex flex-col  items-center my-40 justify-center '>
 
-                    <p className='md:text-xl text-normal font-semibold my-10'>Your Post is Uploading Please wait few seconds</p>
+                    <p className='md:text-xl text-normal font-semibold my-10'>Your Book is Uploading Please wait few seconds</p>
                     {/* <PropagateLoader color="#36d6d6" /> */}
 
                 </div>

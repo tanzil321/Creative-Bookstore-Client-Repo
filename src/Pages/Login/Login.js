@@ -67,7 +67,7 @@ const Login = () => {
               navigate(from, { replace: true })
               toast.success('Login Success')
             
-            }, 500);
+            }, 100);
             // localstorage
             // setCreatedUserEmail(email);
         })

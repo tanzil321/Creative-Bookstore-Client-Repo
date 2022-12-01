@@ -11,8 +11,8 @@ const Home = () => {
     return (
         <div className='mx-5'>
             <Hero></Hero>
-            <Advertise></Advertise>
             <Banner></Banner>
+            <Advertise></Advertise>
             <Sellings></Sellings>
         </div>
     );

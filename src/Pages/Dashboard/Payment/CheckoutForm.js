@@ -13,7 +13,7 @@ const CheckoutForm = ({booking}) => {
     const stripe = useStripe();
     const elements = useElements();
     const { price, email, name, _id } = booking;
-
+    console.log(price)
     useEffect(() => {
         // Create PaymentIntent as soon as the page loads
         fetch("https://creative-bookstore-server.vercel.app/create-payment-intent", {

@@ -10,7 +10,7 @@ const Payment = () => {
     const books = useLoaderData()
     console.log('here',books);
     // const navigation = useNavigation();
-    const {  price  } = books;
+    // const {  price  } = books;
     // if(navigation.state === "loading"){
     //     return <Loading></Loading>
     // }
